@@ -2,6 +2,7 @@
 # Copyright 2021 Valeo Schalter und Sensoren GmbH and contributors
 #
 # Author: Christian Witt <christian.witt@valeo.com>
+# Modified 2024 by Lihao Wang <lihao.wang@valeo.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -125,6 +126,11 @@ class Camera(object):
     rotation = property(lambda self: self._pose[0:3, 0:3])
     translation = property(lambda self: self._pose[0:3, 3])
 
+    def update_extr(self, translation, rotation):
+        self._pose[0:3, 3] = translation
+        self._pose[0:3, 0:3] = rotation
+        self._inv_pose = np.linalg.inv(self._pose)
+
     def project_3d_to_2d(self, world_points: np.ndarray, do_clip=False, invalid_value=np.nan):
         world_points = ensure_point_list(world_points, dim=4)
 
@@ -145,6 +151,15 @@ class Camera(object):
         world_points = camera_points @ self._pose.T
         return world_points[:, 0:3]
 
+    def project_2d_to_3d_ground(self, screen_points: np.ndarray, do_clip=False):
+        world_points = self.project_2d_to_3d(screen_points, norm=np.array([1]), do_clip=do_clip)
+        world_points_from_cam = world_points - self.translation
+        z_ground_from_cam = - self.translation[2]
+        zs_from_cam = world_points_from_cam[:, [2]]
+        scale = z_ground_from_cam / zs_from_cam
+        ground_points = world_points_from_cam * scale + self.translation
+        return ground_points
+
     def _apply_clip(self, points, clip_source) -> np.ndarray:
         if self._size[0] == 0 or self._size[1] == 0:
             raise RuntimeError('clipping without a size is not possible')
@@ -156,7 +171,9 @@ class Camera(object):
 
 
 def create_img_projection_maps(source_cam: Camera, destination_cam: Camera):
-    """generates maps for cv2.remap to remap from one camera to another"""
+    """
+    Generates maps for cv2.remap to remap from one camera to another
+    """
     u_map = np.zeros((destination_cam.height, destination_cam.width, 1), dtype=np.float32)
     v_map = np.zeros((destination_cam.height, destination_cam.width, 1), dtype=np.float32)
 
@@ -176,8 +193,37 @@ def create_img_projection_maps(source_cam: Camera, destination_cam: Camera):
     return map1, map2
 
 
+def create_bev_projection_maps(source_cam: Camera, bev_range: int, bev_size: int):
+    """
+    Generate maps to remap from one camera to bird-eye-view (BEV) image.
+
+    :param bev_range: BEV range in meters
+    :param bev_size: in image size in pixels
+    """
+    u_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
+    v_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
+    scale_pxl_to_meter = bev_range / bev_size
+
+    bev_points_v = np.arange(bev_size)
+    bev_points_world_z = np.zeros(bev_size)
+
+    for u_px in range(bev_size):
+        bev_points_u = np.ones(bev_size) * u_px
+        bev_points_world_x = bev_range / 2 - bev_points_v * scale_pxl_to_meter
+        bev_points_world_y = bev_range / 2 - bev_points_u * scale_pxl_to_meter
+        bev_points_world = np.column_stack((bev_points_world_x, bev_points_world_y, bev_points_world_z))
+        source_points = source_cam.project_3d_to_2d(bev_points_world)
+        u_map.T[0][u_px] = source_points.T[0]
+        v_map.T[0][u_px] = source_points.T[1]
+
+    map1, map2 = cv2.convertMaps(u_map, v_map, dstmap1type=cv2.CV_16SC2, nninterpolation=False)
+    return map1, map2
+
+
 def read_cam_from_json(path):
-    """generates a Camera object from a json file"""
+    """
+    Generates a Camera object from a json file
+    """
     with open(path) as f:
         config = json.load(f)
 
