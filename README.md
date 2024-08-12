@@ -23,7 +23,7 @@ Copy and paste the kepoints from click_points.py to optimize.py, then run optimi
 
 ### (Optional) Step 4: Generate BEV images
 
-For qualitative evaluation, use generate_bev_img.py to create BEV images from SVS images. It ovlays all pixels reprojected from each camera, so better calibration will yield better alignment while poor calibration will have more "ghosting" effect.
+For qualitative evaluation, use generate_bev_img.py to create BEV images from SVS images. It overlays all pixels reprojected from each camera, so better calibration will yield better alignment while poor calibration will have more "ghosting" effect.
 
 ### (Optional) Step 5: Metric calculation
 
@@ -31,7 +31,7 @@ For quantitative evaluation, use eval.py to compute the MDE metric on your test 
 
 
 ## Citation
-If you use this code for your research or other publication purpose, please cite:
+If you use this code for your research or other publication purposes, please cite:
 
 **Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems**
 
