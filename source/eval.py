@@ -94,10 +94,10 @@ def calc_mean_dist_error(calib,
 
 
 if __name__ == '__main__':
-    file_front = "../calibrations/optimized/00164_FV.json"
-    file_left = "../calibrations/optimized/00165_MVL.json"
-    file_right = "../calibrations/optimized/00166_MVR.json"
-    file_rear = "../calibrations/optimized/00167_RV.json"
+    calib_f_front = "../calibrations/optimized/00164_FV.json"
+    calib_f_left = "../calibrations/optimized/00165_MVL.json"
+    calib_f_right = "../calibrations/optimized/00166_MVR.json"
+    calib_f_rear = "../calibrations/optimized/00167_RV.json"
 
     pts_img_front_left = {
         "front": np.array(
@@ -131,10 +131,10 @@ if __name__ == '__main__':
             [(967, 197), (980, 208), (995, 198), (1019, 202), (1027, 211), (1019, 220), (1030, 220), (1043, 212),
              (1047, 207), (1054, 214), (1105, 222), (1078, 216)])}
 
-    intr_front, quat_front, t_front = read_calib(file_front)
-    intr_left, quat_left, t_left = read_calib(file_left)
-    intr_right, quat_right, t_right = read_calib(file_right)
-    intr_rear, quat_rear, t_rear = read_calib(file_rear)
+    intr_front, quat_front, t_front = read_calib(calib_f_front)
+    intr_left, quat_left, t_left = read_calib(calib_f_left)
+    intr_right, quat_right, t_right = read_calib(calib_f_right)
+    intr_rear, quat_rear, t_rear = read_calib(calib_f_rear)
 
     pos_x_front, pos_y_front, pos_z_front = t_front
     pos_x_left, pos_y_left, pos_z_left = t_left
