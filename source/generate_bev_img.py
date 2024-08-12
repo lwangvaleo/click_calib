@@ -22,32 +22,8 @@
 
 import numpy as np
 import cv2
-from projection import Camera, read_cam_from_json
+from projection import Camera, create_bev_projection_maps, read_cam_from_json
 from matplotlib import pyplot as plt
-
-def create_bev_projection_maps(source_cam: Camera, bev_range: int, bev_size: int):
-    """
-    bev_range: in meters
-    bev_size: in pixels
-    """
-    u_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
-    v_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
-    scale_pxl_to_meter = bev_range / bev_size
-
-    bev_points_v = np.arange(bev_size)
-    bev_points_world_z = np.zeros(bev_size)
-
-    for u_px in range(bev_size):
-        bev_points_u = np.ones(bev_size) * u_px
-        bev_points_world_x = bev_range / 2 - bev_points_v * scale_pxl_to_meter
-        bev_points_world_y = bev_range / 2 - bev_points_u * scale_pxl_to_meter
-        bev_points_world = np.column_stack((bev_points_world_x, bev_points_world_y, bev_points_world_z))
-        source_points = source_cam.project_3d_to_2d(bev_points_world)
-        u_map.T[0][u_px] = source_points.T[0]
-        v_map.T[0][u_px] = source_points.T[1]
-
-    map1, map2 = cv2.convertMaps(u_map, v_map, dstmap1type=cv2.CV_16SC2, nninterpolation=False)
-    return map1, map2
 
 def generate_bev(source_cam: Camera, source_img: np.ndarray, bev_range: int, bev_size: int):
     map1, map2 = create_bev_projection_maps(source_cam, bev_range, bev_size)
