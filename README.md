@@ -29,9 +29,12 @@ For qualitative evaluation, use generate_bev_img.py to create BEV images from SV
 
 For quantitative evaluation, use eval.py to compute the MDE metric on your test frames.
 
+### Acknowledgements
+
+The implementation of Click-Calib is based on [WoodScape](https://github.com/valeoai/WoodScape), and we extend our gratitude to all its contributors.
 
 ## Citation
-If you use this code for your research or other publication purposes, please cite:
+If you find Click-Calib is useful in your your research or applications, please consider giving us a star 🌟 and citing:
 
 **Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems**
 
