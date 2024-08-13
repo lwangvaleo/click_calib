@@ -43,13 +43,13 @@ def onclick(event):
         pts_1.append((int(x), int(y)))
         pt_1_idx = len(pts_1)
         ax1.plot(x, y, 'ro', markersize=3)
-        ax1.annotate(f"{pt_1_idx}", (x, y), color='b', fontsize=5)
+        ax1.annotate(f"{pt_1_idx}", (x, y), color=(0.70, 1, 0.40), fontsize=6)
     elif event.inaxes == ax2:
         x, y = event.xdata, event.ydata
         pts_2.append((int(x), int(y)))
         pt_2_idx = len(pts_2)
         ax2.plot(x, y, 'ro', markersize=3)
-        ax2.annotate(f"{pt_2_idx}", (x, y), color='b', fontsize=5)
+        ax2.annotate(f"{pt_2_idx}", (x, y), color=(0.70, 1, 0.40), fontsize=6)
     fig.canvas.draw()
 
 if __name__ == '__main__':
@@ -68,6 +68,7 @@ if __name__ == '__main__':
     ax2.set_title('Cam_2', fontsize=10)
     ax2.axis('off')
 
+    fig.text(0.5, 0.94, 'Click-Calib', fontsize=12, fontweight='bold', ha='center')
     fig.suptitle('Click to select keypoints in both cameras. Scroll to zoom.\n'
                  'Keypoints with the same index in both images should match in world.\n'
                  'The number of selected keypoints must be equal in each camera.', fontsize=10, y=0.9, linespacing=2)
