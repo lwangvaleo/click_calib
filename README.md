@@ -14,7 +14,7 @@ Click-Calib requires Python 3.7 or later. Run the following command in your term
 
 ### Step 1: Initialize extrinsic calibration
 
-To ensure the optimization convergence, an initial guess of the Surround-View System (SVS) extrinsic calibration needs to be provided. You can either use the nominal pose of each camera or manually adjust each camera's pose to achieve a reasonably good BEV image. In this demo code, we use the original calibration from WoodScape as the initial values for simplicity.
+To ensure the optimization convergence, an initial guess of the Surround-View System (SVS) extrinsic calibration needs to be provided. You can either use the nominal pose of each camera or manually adjust each camera's pose to achieve a reasonably good BEV image (we will provide this tool later). In this demo code, we use the original calibration from WoodScape as the initial values for simplicity.
 
 ### Step 2: Select keypoints
 
@@ -37,7 +37,7 @@ For quantitative evaluation, use eval.py to compute the MDE metric on your test 
 The implementation of Click-Calib is based on [WoodScape](https://github.com/valeoai/WoodScape), and we extend our gratitude to all its contributors.
 
 ## Citation
-If you find Click-Calib is useful in your your research or applications, please consider giving us a star 🌟 and citing:
+If you find Click-Calib is useful in your research or applications, please consider giving us a star 🌟 and citing:
 
 **Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems**
 
