@@ -101,6 +101,7 @@ if __name__ == '__main__':
     calib_f_rear = "../calibrations/original/00167_RV.json"
     calib_save_root = "../calibrations/optimized"
 
+    # Put your clicked keypoints here
     pts_img_front_left = {
         "front": np.array([(186, 585), (194, 591), (325, 493), (333, 495), (418, 444), (463, 417), (502, 402), (547, 384),
                            (210, 469), (211, 458), (226, 454), (428, 403), (546, 369)]),

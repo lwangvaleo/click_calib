@@ -1,25 +1,28 @@
 # Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems
 
-This is the official code repository for our paper Click-Calib.
+This is the official code repository for our paper Click-Calib. The example data (images & calibrations) are from the public dataset [WoodScape](https://github.com/valeoai/WoodScape).
 
 ![Click-Calib](assets/click-calib.png)
 
-## Requirements
+## Python environment setup
 
-Please refer to requirements.txt
+Click-Calib requires Python 3.7 or later. Run the following command in your terminal to install the required packages:
 
-## How to use
+`pip install -r requirements.txt`
+
+## Usage Guide
 
 ### Step 1: Initialize extrinsic calibration
 
-To ensure the optimization convergence, a initial guess of the Surround-View System (SVS) calibration needs to be provided. You can just take the nominal pose of each camera, or manually adjust each camera's pose to achieve a reasonably good BEV image. We will provide this manual adjustment tool later.
+To ensure the optimization convergence, an initial guess of the Surround-View System (SVS) extrinsic calibration needs to be provided. You can either use the nominal pose of each camera or manually adjust each camera's pose to achieve a reasonably good BEV image. In this demo code, we use the original calibration from WoodScape as the initial values for simplicity.
 
 ### Step 2: Select keypoints
-Use the click_points.py script to click keypoints in each pair of adjacent camera images. Ensure both images have an equal number of selected keypoints. When you finish clicking, just close the GUI window and the selected keypoints will be printed out. To achieve good calibration, at least 10 points need be selected for each pair of adjacent cameras.
+
+Use the click_points.py script to click keypoints in each pair of adjacent camera images. Ensure both images have an equal number of selected keypoints. After you finish clicking, simply close the GUI window; the selected keypoints will then be printed out. To achieve good calibration, at least 10 points need be selected for each pair of adjacent cameras. If you prefer not to select points yourself, you can skip this step and use our pre-selected keypoints provided in optimize.py.
 
 ### Step 3: Optimize
 
-Copy and paste the kepoints from click_points.py to optimize.py, then run optimize.py. The optimization process should take about 5 to 30 seconds. If it takes too long time or results in a large Mean Distance Error (MDE), this indicate a failure to converge. In such cases, check your initial extrinsics or other settings (e.g., number of selected keypoints).
+Copy and paste the keypoints from click_points.py to optimize.py, then run optimize.py. The optimization process should take about 5 to 30 seconds. If it takes too long time or results in a large Mean Distance Error (MDE), this indicates a failure to converge. In such cases, check your initial extrinsics or other settings (e.g., number of selected keypoints).
 
 ### (Optional) Step 4: Generate BEV images
 
