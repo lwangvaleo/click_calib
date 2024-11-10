@@ -1,3 +1,25 @@
+# Copyright 2024 Valeo Brain Division and contributors
+#
+# Author: Lihao Wang <lihao.wang@valeo.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+
 import matplotlib.pyplot as plt
 from matplotlib.widgets import TextBox, RadioButtons, Button
 import os
@@ -8,6 +30,13 @@ from generate_bev_img import generate_bev_all_cams
 
 
 if __name__ == '__main__':
+    """
+    How to use:
+    Adjust the extrinsic parameters, especially rotation angles, for each camera to create a reasonably good BEV image. 
+    Use the left-right / front-rear toggle button to switch between BEV images overlaid from different cameras. 
+    Once finished, click 'Export to files' button to save calibrations to files. Then you can use the saved calibrations
+    as the initial files for optimize.py.
+    """
     ini_calib_dir = "../calibrations/fisheye/creteil_learning_car_manual_calib_ini"
     # Original calibrations are used only to get intrinsics and camera heights
     calib_ori_f_front = "../calibrations/original/00164_FV.json"
