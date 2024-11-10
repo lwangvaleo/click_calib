@@ -160,6 +160,12 @@ class Camera(object):
         ground_points = world_points_from_cam * scale + self.translation
         return ground_points
 
+    def get_translation(self):
+        return self._pose[0:3, 3]
+
+    def get_rotation(self):
+        return self._pose[0:3, 0:3]
+
     def _apply_clip(self, points, clip_source) -> np.ndarray:
         if self._size[0] == 0 or self._size[1] == 0:
             raise RuntimeError('clipping without a size is not possible')
@@ -198,7 +204,7 @@ def create_bev_projection_maps(source_cam: Camera, bev_range: int, bev_size: int
     Generate maps to remap from one camera to bird-eye-view (BEV) image.
 
     :param bev_range: BEV range in meters
-    :param bev_size: in image size in pixels
+    :param bev_size: BEV image size in pixels
     """
     u_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
     v_map = np.zeros((bev_size, bev_size, 1), dtype=np.float32)
@@ -218,6 +224,19 @@ def create_bev_projection_maps(source_cam: Camera, bev_range: int, bev_size: int
 
     map1, map2 = cv2.convertMaps(u_map, v_map, dstmap1type=cv2.CV_16SC2, nninterpolation=False)
     return map1, map2
+
+def bev_points_world_to_img(bev_range: float, bev_size: int, bev_points_world: np.ndarray):
+    """
+    Convert world ground points coordinates (in meter) to bird-eye-view (BEV) image coordinates (in pixel).
+
+    :param bev_range: BEV range in meters
+    :param bev_size: BEV image size in pixels
+    :param bev_points_world: world ground points coordinates (in meter)
+    """
+    scale_meter_to_pxl = bev_size / bev_range
+    bev_points_img_u = (bev_range / 2 - bev_points_world[1]) * scale_meter_to_pxl
+    bev_points_img_v = (bev_range / 2 - bev_points_world[0]) * scale_meter_to_pxl
+    return np.stack(((bev_points_img_u, bev_points_img_v))).astype(np.int32)
 
 
 def read_cam_from_json(path):
