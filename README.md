@@ -2,10 +2,7 @@
 
 This is the official code repository for our paper Click-Calib. The example data (images & calibrations) are from the public dataset [WoodScape](https://github.com/valeoai/WoodScape).
 
-[[Paper](https://arxiv.org/abs/2501.01557)]
-
-### Video
-[![Video](https://img.youtube.com/vi/p4pmqPD5JJU/maxresdefault.jpg)](https://www.youtube.com/watch?v=p4pmqPD5JJU)
+[[Paper](https://arxiv.org/abs/2501.01557)] [[Video](https://www.youtube.com/watch?v=p4pmqPD5JJU)]
 
 ### Overview
 ![Click-Calib](assets/click-calib.png)
