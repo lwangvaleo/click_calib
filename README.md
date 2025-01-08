@@ -2,6 +2,15 @@
 
 This is the official code repository for our paper Click-Calib. The example data (images & calibrations) are from the public dataset [WoodScape](https://github.com/valeoai/WoodScape).
 
+[[Paper](https://arxiv.org/abs/2501.01557)]
+
+### Video
+<video controls>
+  <source src="assets/click-calib.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+### Overview
 ![Click-Calib](assets/click-calib.png)
 
 ## Python environment setup
@@ -49,11 +58,15 @@ gratitude to all its contributors.
 ## Citation
 If you find Click-Calib is useful in your research or applications, please consider giving us a star 🌟 and citing:
 
-**Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems**
+**Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems**.
+[Lihao Wang](https://scholar.google.com/citations?user=u2NnHowAAAAJ&hl=en). In arXiv:2501.01557.
 
 Bibtex:
 ```
-@inproceedings{
-    todo
+@inproceedings{lwang2025clickcalib,
+  title={Click-Calib: A Robust Extrinsic Calibration Method for Surround-View Systems},
+  author={Lihao Wang},
+  booktitle={arXiv:2501.01557},
+  year={2025}
 }
 ```
